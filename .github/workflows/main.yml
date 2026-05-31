@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4 # <-- UPDATED TO v4
 
     - name: Install C++ Compilers and Libraries
       run: |
@@ -19,11 +19,10 @@ jobs:
 
     - name: Compile the Trading Engine
       run: |
-        # Because we used apt-get, we don't need the crazy -I folder flags anymore!
         g++ -std=c++14 trading_engine.cpp -lpthread -o trading_engine
 
     - name: Upload Binary so you can download it!
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # <-- UPDATED TO v4
       with:
         name: linux-trading-engine-binary
         path: trading_engine
