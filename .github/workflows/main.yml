@@ -1,0 +1,29 @@
+name: Compile C++ Trading Engine
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # This is the perfect Linux x86_64 Sandbox environment!
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install C++ Compilers and Libraries
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ libasio-dev nlohmann-json3-dev libwebsocketpp-dev
+
+    - name: Compile the Trading Engine
+      run: |
+        # Because we used apt-get, we don't need the crazy -I folder flags anymore!
+        g++ -std=c++14 trading_engine.cpp -lpthread -o trading_engine
+
+    - name: Upload Binary so you can download it!
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-trading-engine-binary
+        path: trading_engine
